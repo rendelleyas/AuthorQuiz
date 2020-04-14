@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import {shuffle, sample} from 'underscore'
+import {shuffle, sample} from 'underscore';
+// import PropTypes from 'prop-types'; 
 
 const authors = [
 
@@ -56,7 +57,7 @@ const authors = [
 const state = {
   //pass to a function
   turnData: getTurnData(authors), //array ni sya
-  highlight: 'correct'
+  highlight: ''
 };
 
 
@@ -81,14 +82,22 @@ function getTurnData(authors){
   }
 }
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App {...state}/>
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+function answerSelected(title) {
+  const isCorrect = state.turnData.author.books.some((book) => book === title);
+  state.highlight = isCorrect? 'correct': 'wrong';
+  console.log(title);
+  render(); //nag render sya kay di ma detect sa app nga na change and value sa highligts
+}
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
+
+function render () {
+  ReactDOM.render(
+    <React.StrictMode>
+      <App {...state} answerSelected={answerSelected} />
+    </React.StrictMode>,
+    document.getElementById('root')
+  );
+}
+
+render();
 serviceWorker.unregister();

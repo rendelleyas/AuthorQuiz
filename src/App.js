@@ -14,8 +14,8 @@ import './bootstrap.min.css';
     )
   }
 
-  function Turn({author, books, highlight}){
-
+function Turn({ author, books, highlight, answerSelected}){
+  //the answerSelected parameter is a function
     //choose wh
     function highlightBG(highlight){
       const mapping = {
@@ -31,16 +31,23 @@ import './bootstrap.min.css';
         <div className="col-4 offset-1">
             <img src={author.imageUrl} className="authorimage" alt="Author"/>
         </div>
+        {/* Show ang mga books title, nga random 
+          when clicked, answerSelected is trigger
+        */}
         <div className="col-6">
-          {books.map((title) => <Book title={title} key={title}/>)}
+          {books.map((title) => 
+            <Book title={title} key={title} onClick={answerSelected} />)
+          }
         </div>
       </div>
     );
   }
 
-  function Book ({title}){
+  function Book ({title, onClick}){
+    //the onclick parameter is the function
+    // onClick inside the div is a prop, thats how u gonaa use them with ()
     return (
-      <div className="answer">
+      <div className="answer" onClick={() => onClick(title)}>
         <h4>{title}</h4>
       </div>
     )
@@ -61,12 +68,13 @@ import './bootstrap.min.css';
     )
   }
 
-function App({ turnData, highlight }) {
+function App({ turnData, highlight, answerSelected }) {
+ 
   return (
     <div className='container-fluid'> 
         <div className="container-fluid">
         <Hero />
-        <Turn {...turnData} highlight={highlight}/>
+        <Turn {...turnData} highlight={highlight} answerSelected={answerSelected}/>
         <Continue />
         <Footer />
         </div>
