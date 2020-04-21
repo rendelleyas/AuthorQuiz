@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter, Route} from 'react-router-dom'; 
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
@@ -89,11 +90,28 @@ function answerSelected(title) {
   render(); //nag render sya kay di ma detect sa app nga na change and value sa highligts
 }
 
+function AddAuthorForm({match}) {
+  return (
+    <div className='container-fluid' >
+      <h1>Add Author</h1>
+      <p>{JSON.stringify(match)}</p>
+    </div>
+  );
+}
+
+//return the app, pwede pd ud drtso na
+function Main() {
+  return <App {...state} answerSelected={answerSelected} />;
+}
+
 
 function render () {
   ReactDOM.render(
     <React.StrictMode>
-      <App {...state} answerSelected={answerSelected} />
+      <BrowserRouter>
+        <Route exact path="/" component={Main}></Route>
+        <Route exact path="/add" component={AddAuthorForm}></Route>
+      </BrowserRouter>
     </React.StrictMode>,
     document.getElementById('root')
   );

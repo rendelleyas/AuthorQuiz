@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './App.css';
 import './bootstrap.min.css';
+import { Link } from "react-router-dom";
 
 
   function Hero(){
@@ -90,6 +91,7 @@ function App({ turnData, highlight, answerSelected }) {
         <Hero />
         <Turn {...turnData} highlight={highlight} answerSelected={answerSelected}/>
         <Continue />
+        <p><Link to='/add'>Add an Author</Link></p>
         <Footer />
         </div>
     </div>
